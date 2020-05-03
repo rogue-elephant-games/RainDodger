@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         DamageDealer damageDealer = collider.gameObject.GetComponent<DamageDealer>();
-        if (damageDealer != null && damageDealer.IsFriendly())
+        if (damageDealer != null)
             TakeDamage(damageDealer);
     }
 
