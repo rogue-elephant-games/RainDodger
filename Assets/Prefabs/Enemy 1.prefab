@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4a93a98916d15f34aa327fdf62729e8c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9deca03d2fd9cfb4ba0ac574d7a34961, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -109,6 +109,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  shotCounter: 0
+  minTimeBetweenShots: 0.2
+  maxTimeBetweenShots: 3
+  projectile: {fileID: 6676890320487951718, guid: 77cc5e48f5cef984bb774f24023c0186,
+    type: 3}
+  projectileSpeed: 10
 --- !u!58 &-5884397027857064846
 CircleCollider2D:
   m_ObjectHideFlags: 0

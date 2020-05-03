@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Player Movement")]
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float padding = 0.3f;
+    [SerializeField] float health = 200f;
+
+    [Header("Projectile")]
     [SerializeField] GameObject laserPrefab;
     [SerializeField] float projectileSpeed = 10f;
     [SerializeField] float projectileFiringPeriod = 0.3f;
@@ -42,10 +46,10 @@ public class Player : MonoBehaviour
     {
         while(true)
         {
-            GameObject laser =
+            GameObject projectile =
                 Instantiate(laserPrefab, transform.position, Quaternion.identity)
                 as GameObject;
-            laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, projectileSpeed);
+            projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(0, projectileSpeed);
             yield return new WaitForSeconds(projectileFiringPeriod);
         }
     }
@@ -66,5 +70,21 @@ public class Player : MonoBehaviour
             new Vector2(
                 getDelta(transform.position.x, "Horizontal", xMin, xMax),
                 getDelta(transform.position.y, "Vertical", yMin, yMax));
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        DamageDealer damageDealer = collider.gameObject.GetComponent<DamageDealer>();
+        if (damageDealer != null && !damageDealer.IsFriendly())
+            TakeDamage(damageDealer);
+    }
+
+    private void TakeDamage(DamageDealer damageDealer)
+    {
+        health -= damageDealer.GetDamage();
+        damageDealer.Hit();
+
+        if (health <= 0)
+            Destroy(gameObject);
     }
 }

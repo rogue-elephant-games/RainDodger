@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6c308c61ed4e30c4cb99c11204e59410, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c945f38f56084124f8e9f3e8069df4a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,3 +96,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   padding: 0.3
+  health: 200
+  laserPrefab: {fileID: 1936167839024172369, guid: d6fe1ce058974f641bfcb3486b037dd6,
+    type: 3}
+  projectileSpeed: 10
+  projectileFiringPeriod: 0.1
