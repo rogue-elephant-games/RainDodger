@@ -4,14 +4,27 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Enemy Stats")]
     [SerializeField] float health = 100f;
+    [SerializeField] int scoreValue = 150;
+
+    [Header("Shooting")]
     [SerializeField] float shotCounter;
     [SerializeField] float minTimeBetweenShots = 0.2f;
     [SerializeField] float maxTimeBetweenShots = 3f;
     [SerializeField] GameObject projectile;
+    [SerializeField] float projectileSpeed = 10f;
+
+    [Header("Dying")]
     [SerializeField] GameObject explosionVFX;
     [SerializeField] float explosionDuration = 1f;
-    [SerializeField] float projectileSpeed = 10f;
+
+    [Header("SFX")]
+    [SerializeField] AudioClip destroyedSFX;
+    [SerializeField][Range(0,1)] float destroyedSFXVolume = 0.7f;
+    [SerializeField] AudioClip laserSFX;
+    [SerializeField][Range(0,1)] float laserSFXVolume = 0.2f;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +54,7 @@ public class Enemy : MonoBehaviour
             transform.position,
             Quaternion.identity
         ) as GameObject;
+        AudioSource.PlayClipAtPoint(laserSFX, Camera.main.transform.position, laserSFXVolume);
         projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -projectileSpeed);
     }
 
@@ -62,8 +76,10 @@ public class Enemy : MonoBehaviour
 
     private void DestroyEnemy()
     {
+        FindObjectOfType<GameSession>().AddToScore(scoreValue);
         Destroy(gameObject);
         GameObject explosion = Instantiate(explosionVFX, transform.position, transform.rotation);
         Destroy(explosion, explosionDuration);
+        AudioSource.PlayClipAtPoint(destroyedSFX, Camera.main.transform.position, destroyedSFXVolume);
     }
 }
