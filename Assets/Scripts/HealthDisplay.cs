@@ -16,6 +16,18 @@ public class HealthDisplay : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() => healthText.text = player?.GetHealth().ToString();
+    void Update()
+    {
+        if(healthText != null)
+        {
+            if(player != null)
+                healthText.text = player.GetHealth().ToString();
+            else
+                player = FindObjectOfType<Player>();
+        }
+        else
+            healthText = GetComponent<TextMeshProUGUI>();
+            
+    }
 
 }
