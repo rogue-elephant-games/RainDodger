@@ -110,16 +110,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febf949b61880fc439cbbd7ca253857d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 300
+  scoreValue: 150
+  canShoot: 1
   shotCounter: 0
   minTimeBetweenShots: 0.2
   maxTimeBetweenShots: 3
   projectile: {fileID: 6676890320487951718, guid: 77cc5e48f5cef984bb774f24023c0186,
     type: 3}
+  projectileSpeed: 10
   explosionVFX: {fileID: 8561282329016376678, guid: 729ea29f93076c54bb57d72f845ae5c5,
     type: 3}
   explosionDuration: 1
-  projectileSpeed: 10
   destroyedSFX: {fileID: 8300000, guid: 6006c06a9d925004396f915ffd94e888, type: 3}
   destroyedSFXVolume: 0.7
   laserSFX: {fileID: 8300000, guid: 6a79c78dc3870674ea6511b3c45dab16, type: 3}

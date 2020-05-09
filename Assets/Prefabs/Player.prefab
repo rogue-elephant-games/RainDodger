@@ -97,7 +97,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   padding: 0.3
-  health: 500
+  health: 1000
+  slowDownFactor: 0.2
+  playerBulletTimeSpeedFactor: 5
   explosionVFX: {fileID: 8561282329016376678, guid: 729ea29f93076c54bb57d72f845ae5c5,
     type: 3}
   explosionDuration: 1

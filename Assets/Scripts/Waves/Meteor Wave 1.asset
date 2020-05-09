@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8361f2d68aac2a4f8baea4f63f0fd8c, type: 3}
-  m_Name: Wave 3
+  m_Name: Meteor Wave 1
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 4595586653811899055, guid: e0bb405dc44fdbc47aa321aa85ef9052,
+  enemyPrefab: {fileID: 4595586653811899055, guid: 00546dc3d4d7ee9459920cdf28663c5a,
     type: 3}
-  pathPrefab: {fileID: 4397447382817855834, guid: 0475f634b2c510c4a8bc5dd5caf0c8b5,
+  pathPrefab: {fileID: 1850976722942366777, guid: 940c66b5912c787439da96da977162fc,
     type: 3}
-  timeBetweenSpawns: 2
-  spawnRandomFactor: 0.8
-  numberOfEnemies: 3
-  moveSpeed: 4
+  timeBetweenSpawns: 3
+  spawnRandomFactor: 0.3
+  numberOfEnemies: 1
+  moveSpeed: 15

@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] int scoreValue = 150;
 
     [Header("Shooting")]
+    [SerializeField] bool canShoot = true;
     [SerializeField] float shotCounter;
     [SerializeField] float minTimeBetweenShots = 0.2f;
     [SerializeField] float maxTimeBetweenShots = 3f;
@@ -21,10 +22,10 @@ public class Enemy : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] AudioClip destroyedSFX;
-    [SerializeField][Range(0,1)] float destroyedSFXVolume = 0.7f;
+    [SerializeField] [Range(0, 1)] float destroyedSFXVolume = 0.7f;
     [SerializeField] AudioClip laserSFX;
-    [SerializeField][Range(0,1)] float laserSFXVolume = 0.2f;
-    
+    [SerializeField] [Range(0, 1)] float laserSFXVolume = 0.2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,11 +40,14 @@ public class Enemy : MonoBehaviour
 
     private void CountDownAndShoot()
     {
-        shotCounter -= Time.deltaTime;
-        if(shotCounter <= 0f)
+        if (canShoot)
         {
-            Shoot();
-            shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
+            shotCounter -= Time.deltaTime;
+            if (shotCounter <= 0f)
+            {
+                Shoot();
+                shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
+            }
         }
     }
 
@@ -67,6 +71,8 @@ public class Enemy : MonoBehaviour
 
     private void TakeDamage(DamageDealer damageDealer)
     {
+        GameObject explosion = Instantiate(explosionVFX, transform.position, transform.rotation);
+        Destroy(explosion, explosionDuration * 0.75f);
         health -= damageDealer.GetDamage();
         damageDealer.Hit();
 

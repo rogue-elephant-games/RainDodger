@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5242999990592116270}
   - component: {fileID: 8107925986178329258}
   m_Layer: 9
-  m_Name: Bomber 1
+  m_Name: Enemy 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8754ab10b94e95c44b312f6431e7ba7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e4e7ff354c1e8fb41b7dc84f6a69495f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -111,21 +111,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 500
-  scoreValue: 350
+  scoreValue: 600
   canShoot: 1
   shotCounter: 0
-  minTimeBetweenShots: 0.2
-  maxTimeBetweenShots: 3
-  projectile: {fileID: 6676890320487951718, guid: 085ef66fd3877724799bc76f0447a4d9,
+  minTimeBetweenShots: 0.05
+  maxTimeBetweenShots: 1
+  projectile: {fileID: 6676890320487951718, guid: f2b14578dfb45e740b9d67c7a4234d9f,
     type: 3}
-  projectileSpeed: 6
+  projectileSpeed: 15
   explosionVFX: {fileID: 8561282329016376678, guid: 729ea29f93076c54bb57d72f845ae5c5,
     type: 3}
   explosionDuration: 1
   destroyedSFX: {fileID: 8300000, guid: 6006c06a9d925004396f915ffd94e888, type: 3}
   destroyedSFXVolume: 0.7
   laserSFX: {fileID: 8300000, guid: 6a79c78dc3870674ea6511b3c45dab16, type: 3}
-  laserSFXVolume: 0.32
+  laserSFXVolume: 0.2
 --- !u!58 &847377614348633618
 CircleCollider2D:
   m_ObjectHideFlags: 0

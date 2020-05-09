@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 847377614348633618}
   - component: {fileID: 5242999990592116270}
   - component: {fileID: 8107925986178329258}
+  - component: {fileID: 7171872649949310819}
   m_Layer: 9
-  m_Name: Bomber 1
+  m_Name: Meteor 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8754ab10b94e95c44b312f6431e7ba7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a8e24b4d4c535a9489a1eaf20115dfb5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -110,22 +111,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febf949b61880fc439cbbd7ca253857d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 500
-  scoreValue: 350
-  canShoot: 1
+  health: 100
+  scoreValue: 50
+  canShoot: 0
   shotCounter: 0
   minTimeBetweenShots: 0.2
   maxTimeBetweenShots: 3
-  projectile: {fileID: 6676890320487951718, guid: 085ef66fd3877724799bc76f0447a4d9,
+  projectile: {fileID: 6676890320487951718, guid: 77cc5e48f5cef984bb774f24023c0186,
     type: 3}
-  projectileSpeed: 6
+  projectileSpeed: 10
   explosionVFX: {fileID: 8561282329016376678, guid: 729ea29f93076c54bb57d72f845ae5c5,
     type: 3}
   explosionDuration: 1
   destroyedSFX: {fileID: 8300000, guid: 6006c06a9d925004396f915ffd94e888, type: 3}
   destroyedSFXVolume: 0.7
   laserSFX: {fileID: 8300000, guid: 6a79c78dc3870674ea6511b3c45dab16, type: 3}
-  laserSFXVolume: 0.32
+  laserSFXVolume: 0.2
 --- !u!58 &847377614348633618
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -139,9 +140,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.008376285, y: 0}
   serializedVersion: 2
-  m_Radius: 0.52
+  m_Radius: 0.23797648
 --- !u!114 &5242999990592116270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,3 +177,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7171872649949310819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595586653811899055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4b5f6e94fc1ce44a4e650e862f312d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinSpeed: 90

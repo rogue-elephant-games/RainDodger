@@ -23,11 +23,12 @@ public class ScoreDisplay : MonoBehaviour
 
     private void GetScoreText()
     {
+        if(gameSession == null)
+            gameSession = FindObjectOfType<GameSession>();
         if(scoreText == null)
-        {
             scoreText = GameObject.FindWithTag("ScoreText")?.GetComponent<TextMeshProUGUI>();
-        }
-        else
+        
+        if(scoreText != null)
             scoreText.text = gameSession.GetScore().ToString();
     }
 }

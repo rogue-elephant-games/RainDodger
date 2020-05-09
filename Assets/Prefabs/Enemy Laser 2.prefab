@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 6000147493034385353}
   - component: {fileID: 8987862673776815396}
   - component: {fileID: -8841434461312873902}
-  - component: {fileID: 1820506863}
-  - component: {fileID: -3106119960207321749}
+  - component: {fileID: 687910213125731133}
   m_Layer: 11
-  m_Name: Enemy Bomb
+  m_Name: Enemy Laser 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: -1097738013
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: aaaf61efbf39f534da6201a553d851a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 359f952bc726e1e409ab35fad5df9f47, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -97,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbae1e9ffb414947983259b4160e3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 200
+  damage: 50
 --- !u!50 &-8841434461312873902
 Rigidbody2D:
   serializedVersion: 4
@@ -119,8 +118,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &1820506863
-CircleCollider2D:
+--- !u!70 &687910213125731133
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -133,18 +132,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.4625
---- !u!114 &-3106119960207321749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6676890320487951718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a4b5f6e94fc1ce44a4e650e862f312d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spinSpeed: 90
+  m_Size: {x: 0.13846155, y: 0.83076924}
+  m_Direction: 0

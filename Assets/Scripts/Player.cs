@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float padding = 0.3f;
     [SerializeField] int health = 200;
+    [SerializeField] [Range(0.1f, 0.7f)] float slowDownFactor = 0.5f;
+    [SerializeField] [Range(2f, 7f)] float playerBulletTimeSpeedFactor = 5f;
 
     [SerializeField] GameObject explosionVFX;
     [SerializeField] float explosionDuration = 1f;
@@ -20,17 +22,20 @@ public class Player : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] AudioClip destroyedSFX;
-    [SerializeField][Range(0,1)] float destroyedSFXVolume = 0.7f;
+    [SerializeField] [Range(0, 1)] float destroyedSFXVolume = 0.7f;
     [SerializeField] AudioClip laserSFX;
-    [SerializeField][Range(0,1)] float laserSFXVolume = 0.2f;
+    [SerializeField] [Range(0, 1)] float laserSFXVolume = 0.2f;
 
     Coroutine firingCoroutine;
+    float inGameMoveSpeed;
+    AudioSource audioSource;
 
     float xMin, xMax, yMin, yMax;
 
     void Start()
     {
         SetUpMoveBoundaries();
+        inGameMoveSpeed = moveSpeed;
     }
 
     void Update()
@@ -41,19 +46,47 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             firingCoroutine = StartCoroutine(FireContinuosly());
         }
-        if(Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire1"))
         {
             StopCoroutine(firingCoroutine);
         }
+        if (Input.GetButtonDown("Fire3"))
+        {
+            BulletTime();
+        }
+        if (Input.GetButtonUp("Fire3"))
+            ResetFromBulletTime();
+    }
+
+    private void BulletTime()
+    {
+        Time.timeScale = slowDownFactor;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        inGameMoveSpeed *= playerBulletTimeSpeedFactor;
+
+        var music = GameObject.FindWithTag("Music");
+        if (music != null)
+        {
+            audioSource = music.GetComponent<AudioSource>();
+            if (audioSource != null)
+                audioSource.pitch = slowDownFactor;
+        }
+    }
+    private void ResetFromBulletTime()
+    {
+        Time.timeScale = 1f;
+            inGameMoveSpeed = moveSpeed;
+            if(audioSource != null)
+                audioSource.pitch = 1f;
     }
 
     IEnumerator FireContinuosly()
     {
-        while(true)
+        while (true)
         {
             GameObject projectile =
                 Instantiate(laserPrefab, transform.position, Quaternion.identity)
@@ -67,15 +100,15 @@ public class Player : MonoBehaviour
     private void SetUpMoveBoundaries()
     {
         Camera gameCamera = Camera.main;
-        var min = gameCamera.ViewportToWorldPoint(new Vector3(0,0,0));
-        var max = gameCamera.ViewportToWorldPoint(new Vector3(1,1,0));
-        (xMin, xMax, yMin, yMax) = (min.x +padding, max.x -padding, min.y + padding, max.y - padding);
+        var min = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0));
+        var max = gameCamera.ViewportToWorldPoint(new Vector3(1, 1, 0));
+        (xMin, xMax, yMin, yMax) = (min.x + padding, max.x - padding, min.y + padding, max.y - padding);
     }
 
     private void Move()
     {
         Func<float, string, float, float, float> getDelta = (position, axis, min, max) =>
-            Mathf.Clamp(position + (Input.GetAxis(axis) * Time.deltaTime * moveSpeed), min, max);
+            Mathf.Clamp(position + (Input.GetAxis(axis) * Time.deltaTime * inGameMoveSpeed), min, max);
         transform.position =
             new Vector2(
                 getDelta(transform.position.x, "Horizontal", xMin, xMax),
@@ -91,6 +124,8 @@ public class Player : MonoBehaviour
 
     private void TakeDamage(DamageDealer damageDealer)
     {
+        GameObject explosion = Instantiate(explosionVFX, transform.position, transform.rotation);
+        Destroy(explosion, explosionDuration * 0.75f);
         health -= damageDealer.GetDamage();
         damageDealer.Hit();
 
@@ -99,6 +134,7 @@ public class Player : MonoBehaviour
     }
     private void DestroyPlayer()
     {
+        ResetFromBulletTime();
         FindObjectOfType<Level>().LoadGameOver();
         Destroy(gameObject);
         GameObject explosion = Instantiate(explosionVFX, transform.position, transform.rotation);
