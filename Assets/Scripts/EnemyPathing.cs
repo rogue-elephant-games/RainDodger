@@ -35,7 +35,7 @@ public class EnemyPathing : MonoBehaviour
             transform.position =
                 Vector2.MoveTowards(transform.position, targetPosition, movementThisFrame);
             
-            if(new Vector2(transform.position.x, transform.position.y) == targetPosition)
+            if(transform?.position != null && new Vector2(transform.position.x, transform.position.y) == targetPosition)
             {
                 waypointIndex++;
                 if(waveConfig.GetDestroyOnPathEnd() == false && waypointIndex == waypoints.Count -1)

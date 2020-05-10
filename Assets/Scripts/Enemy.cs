@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
     {
         var player = FindObjectOfType<Player>();
         Vector2 firingVector;
-        if(projectileSeeksPlayer && player != null)
+        if(projectileSeeksPlayer && player?.transform.position != null)
         {
             transform.up = Vector3.Lerp(transform.up, (player.transform.position - transform.position), 10);
             firingVector =  new Vector2(player.transform.position.x, player.transform.position.y);

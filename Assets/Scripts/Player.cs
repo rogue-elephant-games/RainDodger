@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     {
         Move();
         Fire();
-        if(!isInBulletTime && bulletTime < maxBulletTime)
+        if (!isInBulletTime && bulletTime < maxBulletTime)
             bulletTime += 1;
     }
 
@@ -98,21 +98,24 @@ public class Player : MonoBehaviour
     private void ResetFromBulletTime()
     {
         Time.timeScale = 1f;
-            inGameMoveSpeed = moveSpeed;
-            if(audioSource != null)
-                audioSource.pitch = 1f;
+        inGameMoveSpeed = moveSpeed;
+        if (audioSource != null)
+            audioSource.pitch = 1f;
     }
 
     IEnumerator FireContinuosly()
     {
-        while (true)
+        if (transform?.up != null)
         {
-            GameObject projectile =
-                Instantiate(laserPrefab, transform.position, transform.rotation)
-                as GameObject;
-            projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.up.x * projectileSpeed, transform.up.y * projectileSpeed);
-            AudioSource.PlayClipAtPoint(laserSFX, Camera.main.transform.position, laserSFXVolume);
-            yield return new WaitForSeconds(projectileFiringPeriod);
+            while (true)
+            {
+                GameObject projectile =
+                    Instantiate(laserPrefab, transform.position, transform.rotation)
+                    as GameObject;
+                projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.up.x * projectileSpeed, transform.up.y * projectileSpeed);
+                AudioSource.PlayClipAtPoint(laserSFX, Camera.main.transform.position, laserSFXVolume);
+                yield return new WaitForSeconds(projectileFiringPeriod);
+            }
         }
     }
 
@@ -121,12 +124,15 @@ public class Player : MonoBehaviour
         Camera gameCamera = Camera.main;
         var min = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0));
         var max = gameCamera.ViewportToWorldPoint(new Vector3(1, 1, 0));
-        (xMin, xMax, yMin, yMax) = (min.x + padding, max.x - padding, min.y + padding, max.y - padding);
+        if(min == null)
+            Debug.Log("Game Camera Min is NULL!!!");
+        else
+            (xMin, xMax, yMin, yMax) = (min.x + padding, max.x - padding, min.y + padding, max.y - padding);
     }
 
     private void Move()
     {
-        float turnSpeed = (inGameMoveSpeed * Time.deltaTime) * turnSpeedFactor; 
+        float turnSpeed = (inGameMoveSpeed * Time.deltaTime) * turnSpeedFactor;
         Func<float, string, float, float, float> getDelta = (position, axis, min, max) =>
             Mathf.Clamp(position + (Input.GetAxis(axis) * Time.deltaTime * inGameMoveSpeed), min, max);
         transform.position =
@@ -135,8 +141,8 @@ public class Player : MonoBehaviour
                 getDelta(transform.position.y, "Vertical", yMin, yMax));
 
         var rotation = Input.GetAxis("Rotate");
-        if(rotation != 0)
-            transform.Rotate(0,0, rotation * turnSpeed);
+        if (rotation != 0)
+            transform.Rotate(0, 0, rotation * turnSpeed);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
