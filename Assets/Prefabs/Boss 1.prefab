@@ -110,12 +110,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febf949b61880fc439cbbd7ca253857d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2500
+  health: 3500
   scoreValue: 1000
   canShoot: 1
   shotCounter: 0
-  minTimeBetweenShots: 0.05
-  maxTimeBetweenShots: 1
+  minTimeBetweenShots: 0.02
+  maxTimeBetweenShots: 0.9
   projectile: {fileID: 6676890320487951718, guid: 085ef66fd3877724799bc76f0447a4d9,
     type: 3}
   projectileSpeed: 15
@@ -127,6 +127,7 @@ MonoBehaviour:
   destroyedSFXVolume: 0.7
   laserSFX: {fileID: 8300000, guid: 6a79c78dc3870674ea6511b3c45dab16, type: 3}
   laserSFXVolume: 0.2
+  bossMusic: {fileID: 8300000, guid: 793d38a9c00c69245829a9c85f89bd53, type: 3}
 --- !u!58 &847377614348633618
 CircleCollider2D:
   m_ObjectHideFlags: 0

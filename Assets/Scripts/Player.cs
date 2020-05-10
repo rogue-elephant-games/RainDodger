@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
         {
             audioSource = music.GetComponent<AudioSource>();
             if (audioSource != null)
-                audioSource.pitch = slowDownFactor;
+                audioSource.pitch = 1f - slowDownFactor;
         }
 
         while (bulletTime >= 0)

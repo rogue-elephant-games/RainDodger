@@ -26,11 +26,24 @@ public class Enemy : MonoBehaviour
     [SerializeField] [Range(0, 1)] float destroyedSFXVolume = 0.7f;
     [SerializeField] AudioClip laserSFX;
     [SerializeField] [Range(0, 1)] float laserSFXVolume = 0.2f;
+    [SerializeField] AudioClip bossMusic;
 
+    AudioSource bgMusic;
     // Start is called before the first frame update
     void Start()
     {
         shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
+        if (bossMusic != null)
+        {
+            var music = GameObject.FindWithTag("Music");
+            if (music != null)
+            {
+                bgMusic = music.GetComponent<AudioSource>();
+                if (bgMusic != null)
+                    bgMusic.Stop();
+                AudioSource.PlayClipAtPoint(bossMusic, Camera.main.transform.position, 1f);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -56,11 +69,12 @@ public class Enemy : MonoBehaviour
     {
         var player = FindObjectOfType<Player>();
         Vector2 firingVector;
-        if(projectileSeeksPlayer && player?.transform.position != null)
+        if (projectileSeeksPlayer && player?.transform.position != null)
         {
             transform.up = Vector3.Lerp(transform.up, (player.transform.position - transform.position), 10);
-            firingVector =  new Vector2(player.transform.position.x, player.transform.position.y);
-        } else
+            firingVector = new Vector2(player.transform.position.x, player.transform.position.y);
+        }
+        else
             firingVector = new Vector2(0, -projectileSpeed);
 
         GameObject projectile = Instantiate(
@@ -92,6 +106,11 @@ public class Enemy : MonoBehaviour
 
     private void DestroyEnemy()
     {
+        if (bossMusic != null)
+        {
+            // bossMusic.Stop();
+            bgMusic.Play();
+        }
         FindObjectOfType<GameSession>().AddToScore(scoreValue);
         Destroy(gameObject);
         GameObject explosion = Instantiate(explosionVFX, transform.position, transform.rotation);
