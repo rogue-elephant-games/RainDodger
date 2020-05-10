@@ -7,12 +7,20 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] List<WaveConfig> waveConfigs;
     [SerializeField] int startingWave = 0;
     [SerializeField] bool looping = false;
+
+    bool allWavesSpawned = false;
     IEnumerator Start()
     {
         do
         {
             yield return StartCoroutine(SpawnAllWaves());
         } while (looping);
+    }
+
+    void Update()
+    {
+        if(!looping && allWavesSpawned && FindObjectsOfType<Enemy>().Length == 0)
+            FindObjectOfType<Level>().LoadNextLevel();
     }
 
     private IEnumerator SpawnAllWaves()
@@ -22,6 +30,7 @@ public class EnemySpawner : MonoBehaviour
             var currentWave = waveConfigs[waveIndex];
             yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
         }
+        allWavesSpawned = true;
     }
 
     private IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig)
