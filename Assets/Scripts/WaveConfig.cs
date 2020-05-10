@@ -12,6 +12,7 @@ public class WaveConfig : ScriptableObject
    [SerializeField] float spawnRandomFactor = 0.3f;
    [SerializeField] int numberOfEnemies = 5;
    [SerializeField] float moveSpeed = 2f;
+   [SerializeField] bool destroyOnPathEnd = true;
 
    public GameObject GetEnemyPrefab() => enemyPrefab;
    public List<Transform> GetWaypoints() => 
@@ -20,4 +21,5 @@ public class WaveConfig : ScriptableObject
    public float GetSpawnRandomFactor() => spawnRandomFactor;
    public float GetNumberOfEnemies() => numberOfEnemies;
    public float GetMoveSpeed() => moveSpeed;
+   public bool GetDestroyOnPathEnd() => destroyOnPathEnd;
 }

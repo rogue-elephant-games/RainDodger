@@ -36,9 +36,13 @@ public class EnemyPathing : MonoBehaviour
                 Vector2.MoveTowards(transform.position, targetPosition, movementThisFrame);
             
             if(new Vector2(transform.position.x, transform.position.y) == targetPosition)
+            {
                 waypointIndex++;
+                if(waveConfig.GetDestroyOnPathEnd() == false && waypointIndex == waypoints.Count -1)
+                    waypointIndex = 0;
+            }
         }
-        else{
+        else if(waveConfig.GetDestroyOnPathEnd()){
             Destroy(gameObject);
         }
     }

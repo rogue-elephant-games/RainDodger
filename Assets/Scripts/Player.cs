@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
         {
             bulletTimeCoroutine = StartCoroutine(BulletTime());
         }
-        if (Input.GetButtonUp("Fire3"))
+        if (Input.GetButtonUp("Fire3") || bulletTime <= 0)
         {
             StopCoroutine(bulletTimeCoroutine);
             ResetFromBulletTime();
@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
                 audioSource.pitch = slowDownFactor;
         }
 
-        while (true)
+        while (bulletTime >= 0)
         {
             isInBulletTime = true;
             bulletTime -= 10;
