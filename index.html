@@ -6,20 +6,21 @@
     <title>Unity WebGL Player | Rain Dodger</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
     <script>
       var unityInstance = UnityLoader.instantiate("unityContainer", "Build/Rain Dodger.json", {onProgress: UnityProgress});
     </script>
   </head>
-  <body>
+  <body style="background: #303030;font-family: 'Roboto', sans-serif;">
     <div class="webgl-content">
       <div id="unityContainer" style="width: 590px; height: 960px"></div>
       <div class="footer">
         <div class="webgl-logo"></div>
-        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
         <div class="title">Rain Dodger</div>
       </div>
     </div>
+    <h1 style="color: #fff;">Rain Dodger</h1>
   </body>
 </html>
