@@ -107,9 +107,9 @@ public class Player : MonoBehaviour
         while (true)
         {
             GameObject projectile =
-                Instantiate(laserPrefab, transform.position, Quaternion.identity)
+                Instantiate(laserPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 1)))
                 as GameObject;
-            projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(0, projectileSpeed);
+            projectile.GetComponent<Rigidbody2D>().velocity = transform.forward * projectileSpeed;
             AudioSource.PlayClipAtPoint(laserSFX, Camera.main.transform.position, laserSFXVolume);
             yield return new WaitForSeconds(projectileFiringPeriod);
         }
@@ -131,6 +131,10 @@ public class Player : MonoBehaviour
             new Vector2(
                 getDelta(transform.position.x, "Horizontal", xMin, xMax),
                 getDelta(transform.position.y, "Vertical", yMin, yMax));
+
+        var rotation = Input.GetAxis("Rotate");
+        if(rotation != 0)
+            transform.Rotate(0,0, (rotation * inGameMoveSpeed) * Time.deltaTime * 1.5f);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

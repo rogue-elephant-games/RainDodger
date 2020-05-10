@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float maxTimeBetweenShots = 3f;
     [SerializeField] GameObject projectile;
     [SerializeField] float projectileSpeed = 10f;
+    [SerializeField] bool projectileSeeksPlayer = false;
 
     [Header("Dying")]
     [SerializeField] GameObject explosionVFX;
@@ -53,13 +54,22 @@ public class Enemy : MonoBehaviour
 
     private void Shoot()
     {
+        var player = FindObjectOfType<Player>();
+        Vector2 firingVector;
+        if(projectileSeeksPlayer && player != null)
+        {
+            transform.up = Vector3.Lerp(transform.up, (player.transform.position - transform.position), 10);
+            firingVector =  new Vector2(player.transform.position.x, player.transform.position.y);
+        } else
+            firingVector = new Vector2(0, -projectileSpeed);
+
         GameObject projectile = Instantiate(
             this.projectile,
             transform.position,
             Quaternion.identity
         ) as GameObject;
         AudioSource.PlayClipAtPoint(laserSFX, Camera.main.transform.position, laserSFXVolume);
-        projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -projectileSpeed);
+        projectile.GetComponent<Rigidbody2D>().velocity = firingVector;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
