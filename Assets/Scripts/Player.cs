@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     [Header("Player Movement")]
     [SerializeField] float moveSpeed = 10f;
+    [SerializeField] float turnSpeedFactor = 30f;
     [SerializeField] float padding = 0.3f;
     [SerializeField] int health = 1000;
     [SerializeField] int bulletTime = 500;
@@ -107,9 +108,9 @@ public class Player : MonoBehaviour
         while (true)
         {
             GameObject projectile =
-                Instantiate(laserPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 1)))
+                Instantiate(laserPrefab, transform.position, transform.rotation)
                 as GameObject;
-            projectile.GetComponent<Rigidbody2D>().velocity = transform.forward * projectileSpeed;
+            projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.up.x * projectileSpeed, transform.up.y * projectileSpeed);
             AudioSource.PlayClipAtPoint(laserSFX, Camera.main.transform.position, laserSFXVolume);
             yield return new WaitForSeconds(projectileFiringPeriod);
         }
@@ -125,6 +126,7 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
+        float turnSpeed = (inGameMoveSpeed * Time.deltaTime) * turnSpeedFactor; 
         Func<float, string, float, float, float> getDelta = (position, axis, min, max) =>
             Mathf.Clamp(position + (Input.GetAxis(axis) * Time.deltaTime * inGameMoveSpeed), min, max);
         transform.position =
@@ -134,7 +136,7 @@ public class Player : MonoBehaviour
 
         var rotation = Input.GetAxis("Rotate");
         if(rotation != 0)
-            transform.Rotate(0,0, (rotation * inGameMoveSpeed) * Time.deltaTime * 1.5f);
+            transform.Rotate(0,0, rotation * turnSpeed);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
