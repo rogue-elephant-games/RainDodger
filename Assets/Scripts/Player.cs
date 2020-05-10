@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
     [Header("Player Movement")]
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float padding = 0.3f;
-    [SerializeField] int health = 200;
+    [SerializeField] int health = 1000;
+    [SerializeField] int bulletTime = 500;
     [SerializeField] [Range(0.1f, 0.7f)] float slowDownFactor = 0.5f;
     [SerializeField] [Range(2f, 7f)] float playerBulletTimeSpeedFactor = 5f;
 
@@ -27,8 +28,11 @@ public class Player : MonoBehaviour
     [SerializeField] [Range(0, 1)] float laserSFXVolume = 0.2f;
 
     Coroutine firingCoroutine;
+    Coroutine bulletTimeCoroutine;
+    bool isInBulletTime = false;
     float inGameMoveSpeed;
     AudioSource audioSource;
+    int maxBulletTime;
 
     float xMin, xMax, yMin, yMax;
 
@@ -36,12 +40,15 @@ public class Player : MonoBehaviour
     {
         SetUpMoveBoundaries();
         inGameMoveSpeed = moveSpeed;
+        maxBulletTime = bulletTime;
     }
 
     void Update()
     {
         Move();
         Fire();
+        if(!isInBulletTime && bulletTime < maxBulletTime)
+            bulletTime += 1;
     }
 
     private void Fire()
@@ -54,15 +61,19 @@ public class Player : MonoBehaviour
         {
             StopCoroutine(firingCoroutine);
         }
-        if (Input.GetButtonDown("Fire3"))
+        if (Input.GetButtonDown("Fire3") && bulletTime > 0)
         {
-            BulletTime();
+            bulletTimeCoroutine = StartCoroutine(BulletTime());
         }
         if (Input.GetButtonUp("Fire3"))
+        {
+            StopCoroutine(bulletTimeCoroutine);
             ResetFromBulletTime();
+            isInBulletTime = false;
+        }
     }
 
-    private void BulletTime()
+    IEnumerator BulletTime()
     {
         Time.timeScale = slowDownFactor;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
@@ -74,6 +85,13 @@ public class Player : MonoBehaviour
             audioSource = music.GetComponent<AudioSource>();
             if (audioSource != null)
                 audioSource.pitch = slowDownFactor;
+        }
+
+        while (true)
+        {
+            isInBulletTime = true;
+            bulletTime -= 10;
+            yield return new WaitForSeconds(0.1f);
         }
     }
     private void ResetFromBulletTime()
@@ -143,4 +161,5 @@ public class Player : MonoBehaviour
     }
 
     public int GetHealth() => health;
+    public int GetBulletTimeRemaining() => bulletTime;
 }
